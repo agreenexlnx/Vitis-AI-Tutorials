@@ -18,18 +18,24 @@
 
 
 
-# 1 Introduction
+## Introduction
 
 This Deep Learning (DL) tutorial shows you how to train, prune, and quantize a modified version of the AlexNet convolutional neural network (CNN) with the Kaggle [Dogs vs. Cats](https://www.kaggle.com/c/dogs-vs-cats) dataset in order to deploy it on the Xilinx&reg; [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) board. You will use the [Caffe](http://caffe.berkeleyvision.org) environment available from [Vitis AI](https://developer.xilinx.com/en/get-started/ai.html), which is a set of optimized IP, tools libraries, models and example designs valid for AI inference on both Xilinx edge devices and Alveo cards.
 
-Once the selected CNN has been correctly trained in Caffe, the ``caffemodel`` file of floating point weights is then quantized by the Vitis AI Quantizer that creates an 8-bit integer representation (named "INT8") from which the Vitis AI Compiler generates the ``elf`` file of micro instructions for the Deep Processor Unit (DPU). The final application is executed at run time - via C++ APIs - on the target board to make predictions that can be compared against the simulation reference results.
+Once the selected CNN has been correctly trained in Caffe, the ``caffemodel`` file ``codeph`` of floating point weights is then quantized by the Vitis AI Quantizer that creates an 8-bit integer representation (named "INT8") from which the Vitis AI Compiler generates the ``elf`` file of micro instructions for the Deep Processor Unit (DPU). The final application is executed at run time - via C++ APIs - on the target board to make predictions that can be compared against the simulation reference results.
+
+```
+```
 
 The Dogs vs. Cats dataset is composed of only two classes of objects to be classified: cats and dogs. It contains 25000 RGB images that have been organized into the following three databases (all the images are randomly shuffled before forming the database):
-- ``train_lmdb``: 20000 images (resized to 256x256) in the LMDB database for the forward/backward training process.
-- ``valid_lmdb``:  4000 images (resized to 256x256) in the LMDB database for the validation step during training process.
-- ``test``: 1000 images (resized to 227x227) in plain JPEG format for the top-1 prediction measurements, once the CNN is trained.
+1. number
+2.
+6.
+- ``train_lmdb``: 20000 images (resized to 256 x 256) in the LMDB database for the forward/backward training process.
+- ``valid_lmdb``:  4000 images (resized to 256 x 256) in the LMDB database for the validation step during training process.
+- ``test``: 1000 images (resized to 227 x 227) in plain JPEG format for the top-1 prediction measurements, once the CNN is trained.
 
-AlexNet is a well-known CNN that works with images 227x227x3 in size. It is described in the
+AlexNet is a well-known CNN that works with images 227 x 227 x 3 in size. It is described in the
 [Practitioner Bundle book](https://www.pyimagesearch.com/deep-learning-computer-vision-python-book) by [Dr. Adrian Rosebrock](https://www.linkedin.com/in/adrian-rosebrock-59b8732a/) from [PyImageSearch](https://www.pyimagesearch.com/) where it is modeled and trained in Keras/TensorFlow. The model adopted in this tutorial was manually translated into ``.prototxt`` files and trained with Caffe from scratch. Moreover some layers were organized differently:
 - "Local Response Normalization" (LRN) layers were replaced by "Batch Normalization" (BN) layers;
 - the "ReLU" activation layer was placed after the BN layer, and not before;
